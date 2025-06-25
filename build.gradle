@@ -1,0 +1,91 @@
+import groovy.json.JsonSlurper
+
+plugins {
+    id "java"
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://repo.gradle.org/gradle/libs-releases" } // for gradle-tooling-api
+    flatDir { dirs mcreator_path + '/lib' }
+}
+
+group = 'es.furynocturntv.mcreator'
+version = new JsonSlurper().parse(file('src/main/resources/plugin.json'))['info']['version']
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+configurations {
+    implementation.extendsFrom export
+}
+
+dependencies {
+    implementation project(':MCreator')
+
+    project(':MCreator').afterEvaluate(() ->
+            project(":MCreator").configurations.named("implementation").get().dependencies.each {
+                //noinspection ForeignDelegate
+                implementation it
+            }
+    )
+
+    // Uncomment the following two lines if you need to use JavaFX in your plugin
+    implementation group: 'org.openjfx', name: 'javafx-web', version: '21.0.2'
+    implementation group: 'org.openjfx', name: 'javafx-swing', version: '21.0.2'
+
+	// Para integración con llama.cpp
+    implementation 'com.knuddels:jtokkit:0.6.1' // Para contar tokens
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    implementation 'org.java-websocket:Java-WebSocket:1.5.4'
+
+    // Para descarga de modelos
+    implementation 'org.apache.commons:commons-compress:1.25.0'
+
+    // carga de packages glovales
+    implementation 'org.json:json:20231013' // JSON
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0' // HTTP (OkHttp)
+    implementation 'com.sun.mail:javax.mail:1.6.2' // JavaMail (para correos)
+    implementation 'org.jfree:jfreechart:1.5.4' // JFreeChart (para gráficos)
+    implementation 'com.miglayout:miglayout-swing:11.1' // Para MigLayout (interfaz gráfica)
+    implementation 'org.apache.commons:commons-lang3:3.12.0' // Para java.time.LocalDate
+    implementation 'org.apache.commons:commons-text:1.10.0' // Para StringUtils (abreviar texto)
+
+    // Otras dependencias de MCreator
+    // implementation 'net.mcreator:MCreator-API:2025.1' // (Ya no es publica)
+}
+
+tasks.jar {
+    archiveFileName.set("DeepSeek-Assistant.zip")
+
+    from {
+        configurations.export.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+tasks.register('runMCreatorWithPlugin', JavaExec) {
+    dependsOn jar
+
+    environment("MCREATOR_PLUGINS_FOLDER", file("./build/libs"))
+    environment("MCREATOR_PLUGINS_DEV", "")
+
+    jvmArgs '--add-opens', 'java.base/java.lang=ALL-UNNAMED'
+
+    classpath = project(':MCreator').sourceSets.main.runtimeClasspath
+
+    main = 'net.mcreator.Launcher'
+
+    workingDir = mcreator_path
+}
+
+subprojects { subproject ->
+    subproject.plugins.withType(JavaPlugin) {
+        test {
+            dependsOn rootProject.jar
+
+            environment("MCREATOR_PLUGINS_FOLDER", new File(rootProject.projectDir, "/build/libs"))
+            environment("MCREATOR_PLUGINS_DEV", "")
+
+            workingDir = mcreator_path
+        }
+    }
+}

@@ -1,0 +1,15 @@
+{
+  "id": "DeepSeekPluginMCreator",
+  "supportedversions": [
+    202400199999,
+    2024001
+  ],
+  "weight": 0,
+  "javaplugin": "es.furynocturntv.mcreator.deepseek",
+  "info": {
+    "name": "DeepSeek Assistant",
+    "version": "2.0.1",
+    "description": "Asistente de IA DeepSeek integrado en MCreator",
+    "author": "FuryNocturnTV"
+  }
+}
