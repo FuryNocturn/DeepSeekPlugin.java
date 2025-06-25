@@ -8,9 +8,9 @@ import es.furynocturntv.mcreator.deepseek.gui.*;
 import es.furynocturntv.mcreator.deepseek.utils.ConversationHistory;
 import es.furynocturntv.mcreator.deepseek.utils.PluginLoader;
 import es.furynocturntv.mcreator.deepseek.config.DeepSeekPreferences;
+import es.furynocturntv.mcreator.deepseek.utils.ResponseCache;
 
     //Carga modulos Mcreator
-import es.furynocturntv.mcreator.deepseek.utils.ResponseCache;
 import net.mcreator.plugin.*;
 import net.mcreator.plugin.events.*;
 import net.mcreator.ui.*;
@@ -137,7 +137,7 @@ public class DeepSeekPlugin extends JavaPlugin {
     }
 
     private boolean isFirstRun() {
-        return DeepSeekPreferences.PREFERENCES.get("deepseek.first_run", true);
+        return DeepSeekPreferences.getInstance().isFirstRun();
     }
 
     private void showApiKeyDialog(MCreator mcreator) {
@@ -145,7 +145,7 @@ public class DeepSeekPlugin extends JavaPlugin {
         dialog.setVisible(true);
 
         // Marcar que ya no es la primera ejecución
-        DeepSeekPreferences.PREFERENCES.set("deepseek.first_run", false);
+        setFirstRunCompleted();
     }
 
     private void registerActions(ActionRegistry actionRegistry) {
@@ -248,5 +248,9 @@ public class DeepSeekPlugin extends JavaPlugin {
 
     public static String getDescription() {
         return DESCRIPTION;
+    }
+
+    private void setFirstRunCompleted() {
+        DeepSeekPreferences.getInstance().setFirstRun(false);
     }
 }

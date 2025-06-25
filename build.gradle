@@ -52,6 +52,9 @@ dependencies {
 
     // Otras dependencias de MCreator
     // implementation 'net.mcreator:MCreator-API:2025.1' // (Ya no es publica)
+    // implementation 'net.mcreator:mcreator-core:2025.1'
+    // implementation 'net.mcreator:mcreator-workspace:2025.1'
+
 }
 
 tasks.jar {
