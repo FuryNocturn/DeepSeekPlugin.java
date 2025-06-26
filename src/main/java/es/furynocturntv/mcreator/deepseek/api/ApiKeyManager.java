@@ -2,6 +2,10 @@ package es.furynocturntv.mcreator.deepseek.api;
 
 import es.furynocturntv.mcreator.deepseek.config.DeepSeekPreferences;
 
+/**
+ * Gestor de claves API para el servicio DeepSeek.
+ * Maneja el almacenamiento seguro y recuperación de claves API.
+ */
 public class ApiKeyManager {
     private final DeepSeekPreferences preferences;
 
@@ -9,6 +13,11 @@ public class ApiKeyManager {
         this.preferences = DeepSeekPreferences.getInstance();
     }
 
+    /**
+     * Guarda una nueva clave API de forma segura
+     * @param apiKey Clave API a almacenar
+     * @throws IllegalArgumentException si la clave es nula o vacía
+     */
     public void saveApiKey(String apiKey) {
         if (apiKey == null || apiKey.trim().isEmpty()) {
             throw new IllegalArgumentException("La API key no puede estar vacía");
@@ -32,6 +41,10 @@ public class ApiKeyManager {
         }
     }
 
+    /**
+     * Verifica si existe una clave API válida almacenada
+     * @return true si hay una clave API no vacía almacenada
+     */
     public boolean hasApiKey() {
         String apiKey = getApiKey();
         return apiKey != null && !apiKey.trim().isEmpty();

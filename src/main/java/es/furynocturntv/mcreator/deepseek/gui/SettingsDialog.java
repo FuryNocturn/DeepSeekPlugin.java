@@ -8,6 +8,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+/**
+ * Diálogo de configuración principal del asistente
+ * Permite personalizar el comportamiento y parámetros del modelo
+ */
 public class SettingsDialog extends JDialog {
 
     private final SettingsManager settingsManager;
@@ -42,6 +46,9 @@ public class SettingsDialog extends JDialog {
         setResizable(false);
     }
 
+    /**
+     * Inicializa todos los componentes de la interfaz
+     */
     private void initComponents() {
         // Modo de búsqueda
         internetSearchCheckbox = new JCheckBox("Habilitar búsqueda por internet");
@@ -93,6 +100,9 @@ public class SettingsDialog extends JDialog {
                 new ModelManagementDialog((JFrame)SwingUtilities.getWindowAncestor(this)).setVisible(true));
     }
 
+    /**
+     * Organiza los componentes en secciones y paneles
+     */
     private void setupLayout() {
         setLayout(new BorderLayout(10, 10));
 
@@ -142,6 +152,11 @@ public class SettingsDialog extends JDialog {
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * Crea un panel de sección con título
+     * @param title Título de la sección
+     * @return Panel configurado
+     */
     private JPanel createSectionPanel(String title) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -163,6 +178,9 @@ public class SettingsDialog extends JDialog {
         return panel;
     }
 
+    /**
+     * Carga la configuración actual en los componentes
+     */
     private void loadCurrentSettings() {
         internetSearchCheckbox.setSelected(settingsManager.isInternetSearchEnabled());
         autoImplementCheckbox.setSelected(settingsManager.isAutoImplementEnabled());
@@ -177,6 +195,9 @@ public class SettingsDialog extends JDialog {
         modelSelector.setSelectedItem(settingsManager.getSelectedModel());
     }
 
+    /**
+     * Guarda los cambios de configuración
+     */
     private void saveSettings() {
         settingsManager.setInternetSearchEnabled(internetSearchCheckbox.isSelected());
         settingsManager.setAutoImplementEnabled(autoImplementCheckbox.isSelected());
@@ -195,6 +216,10 @@ public class SettingsDialog extends JDialog {
         dispose();
     }
 
+    /**
+     * Actualiza el selector de modelos según el modo offline/online
+     * @param e Evento que disparó el cambio
+     */
     private void toggleOfflineMode(ActionEvent e) {
         boolean offlineMode = offlineModeCheckbox.isSelected();
         modelSelector.removeAllItems();

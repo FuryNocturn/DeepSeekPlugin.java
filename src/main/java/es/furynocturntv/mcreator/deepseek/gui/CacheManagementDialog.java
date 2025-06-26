@@ -6,6 +6,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.text.DecimalFormat;
 
+/**
+ * Diálogo para gestionar y visualizar estadísticas del caché de respuestas
+ */
 public class CacheManagementDialog extends JDialog {
     private final ResponseCache cache;
 
@@ -18,6 +21,10 @@ public class CacheManagementDialog extends JDialog {
         setLocationRelativeTo(parent);
     }
 
+    /**
+     * Inicializa la interfaz del diálogo
+     * Configura los paneles de estadísticas y botones de acción
+     */
     private void initUI() {
         setLayout(new BorderLayout(10, 10));
         JPanel panel = new JPanel(new BorderLayout(10, 10));
@@ -53,6 +60,9 @@ public class CacheManagementDialog extends JDialog {
         add(panel, BorderLayout.CENTER);
     }
 
+    /**
+     * Actualiza las estadísticas mostradas en la interfaz
+     */
     private void updateStats() {
         // Implementar actualización de estadísticas en la UI
     }

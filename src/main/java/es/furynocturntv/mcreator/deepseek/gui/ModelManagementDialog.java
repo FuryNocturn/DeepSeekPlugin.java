@@ -7,6 +7,10 @@ import java.awt.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * Diálogo para gestionar los modelos locales de IA
+ * Permite descargar, importar y administrar modelos GGUF
+ */
 public class ModelManagementDialog extends JDialog {
 
     public ModelManagementDialog(JFrame parent) {
@@ -17,6 +21,10 @@ public class ModelManagementDialog extends JDialog {
         setLocationRelativeTo(parent);
     }
 
+    /**
+     * Inicializa la interfaz del diálogo
+     * Configura los paneles de información y acciones
+     */
     private void initUI() {
         setLayout(new BorderLayout(10, 10));
         JPanel panel = new JPanel(new BorderLayout(10, 10));
@@ -54,6 +62,9 @@ public class ModelManagementDialog extends JDialog {
         add(panel, BorderLayout.CENTER);
     }
 
+    /**
+     * Inicia la descarga del modelo predeterminado en segundo plano
+     */
     private void downloadDefaultModel() {
         new Thread(() -> {
             try {
@@ -77,6 +88,9 @@ public class ModelManagementDialog extends JDialog {
         }).start();
     }
 
+    /**
+     * Permite importar un modelo GGUF personalizado
+     */
     private void importModel() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -91,6 +105,9 @@ public class ModelManagementDialog extends JDialog {
         }
     }
 
+    /**
+     * Abre la carpeta de modelos en el explorador del sistema
+     */
     private void openModelsFolder() {
         try {
             Path path = Paths.get(System.getProperty("user.home"), ".deepseek-mcreator", "models");

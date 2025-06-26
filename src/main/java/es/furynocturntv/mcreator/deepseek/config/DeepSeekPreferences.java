@@ -5,6 +5,10 @@ import java.nio.file.*;
 import java.util.*;
 import java.util.prefs.Preferences;
 
+/**
+ * Gestiona las preferencias y configuración del plugin DeepSeek
+ * Implementa un patrón Singleton para acceso global
+ */
 public class DeepSeekPreferences {
 
     private static final String PREF_NODE = "es/furynocturntv/mcreator/deepseek";
@@ -40,6 +44,11 @@ public class DeepSeekPreferences {
     }
 
     // Métodos principales
+    /**
+     * Guarda una preferencia con respaldo en archivo
+     * @param key Clave de la preferencia
+     * @param value Valor a almacenar
+     */
     public void savePreference(String key, String value) {
         prefs.put(key, value);
         backupToFile();
@@ -171,6 +180,9 @@ public class DeepSeekPreferences {
     }
 
     // Métodos de respaldo y recuperación
+    /**
+     * Realiza respaldo de las preferencias en archivo JSON
+     */
     private void backupToFile() {
         try {
             Files.createDirectories(configFilePath.getParent());
@@ -202,6 +214,9 @@ public class DeepSeekPreferences {
         }
     }
 
+    /**
+     * Restaura preferencias desde el archivo de respaldo
+     */
     @SuppressWarnings("unchecked")
     private void restoreFromBackup() {
         try {

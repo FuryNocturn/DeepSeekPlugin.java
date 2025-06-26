@@ -5,6 +5,10 @@ import java.awt.*;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Ellipse2D;
 
+/**
+ * Componente visual que muestra un indicador de actividad animado circular
+ * con gradiente de color y rotación continua.
+ */
 public class ActivityIndicator extends JComponent {
     private float angle = 0;
     private Timer timer;
@@ -12,6 +16,10 @@ public class ActivityIndicator extends JComponent {
     private int arcLength = 90;
     private boolean running = false;
 
+    /**
+     * Constructor que inicializa el indicador de actividad
+     * Configura el tamaño predeterminado y los colores del gradiente
+     */
     public ActivityIndicator() {
         setPreferredSize(new Dimension(24, 24));
         setMinimumSize(new Dimension(16, 16));
@@ -28,6 +36,10 @@ public class ActivityIndicator extends JComponent {
         });
     }
 
+    /**
+     * Dibuja el componente con efectos de antialiasing y gradiente
+     * @param g Contexto gráfico para el dibujado
+     */
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
@@ -67,6 +79,9 @@ public class ActivityIndicator extends JComponent {
         g2.dispose();
     }
 
+    /**
+     * Inicia la animación del indicador
+     */
     public void start() {
         if (!running) {
             running = true;
@@ -74,6 +89,9 @@ public class ActivityIndicator extends JComponent {
         }
     }
 
+    /**
+     * Detiene la animación del indicador
+     */
     public void stop() {
         if (running) {
             running = false;
@@ -82,6 +100,10 @@ public class ActivityIndicator extends JComponent {
         }
     }
 
+    /**
+     * Establece la longitud del arco animado
+     * @param length Longitud del arco entre 30 y 120 grados
+     */
     public void setArcLength(int length) {
         this.arcLength = Math.max(30, Math.min(120, length));
     }

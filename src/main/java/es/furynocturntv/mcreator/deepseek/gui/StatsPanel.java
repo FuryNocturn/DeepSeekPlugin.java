@@ -14,6 +14,9 @@ import java.time.LocalDate;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Panel que muestra estadísticas y gráficos sobre el historial de conversaciones
+ */
 public class StatsPanel extends JPanel {
     private final ConversationHistory history;
 
@@ -22,6 +25,9 @@ public class StatsPanel extends JPanel {
         initUI();
     }
 
+    /**
+     * Crea el panel principal con pestañas para diferentes vistas
+     */
     private void initUI() {
         setLayout(new BorderLayout());
 
@@ -37,6 +43,10 @@ public class StatsPanel extends JPanel {
         add(tabbedPane, BorderLayout.CENTER);
     }
 
+    /**
+     * Crea el panel de resumen con estadísticas básicas
+     * @return Panel con información general
+     */
     private JPanel createSummaryPanel() {
         JPanel panel = new JPanel(new GridLayout(0, 1, 5, 5));
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -59,6 +69,10 @@ public class StatsPanel extends JPanel {
         return panel;
     }
 
+    /**
+     * Crea el panel de gráficos con visualización de costos por día
+     * @return Panel con gráficos estadísticos
+     */
     private JPanel createChartsPanel() {
         JPanel panel = new JPanel(new BorderLayout());
 
@@ -92,6 +106,11 @@ public class StatsPanel extends JPanel {
         return panel;
     }
 
+    /**
+     * Formatea una conversación para su visualización
+     * @param conv Conversación a formatear
+     * @return String formateado con timestamp, prompt y costo
+     */
     private String formatConversation(ConversationHistory.Conversation conv) {
         return String.format("[%s] %s - Costo: $%.4f",
                 conv.timestamp.toLocalTime().toString().substring(0, 5),

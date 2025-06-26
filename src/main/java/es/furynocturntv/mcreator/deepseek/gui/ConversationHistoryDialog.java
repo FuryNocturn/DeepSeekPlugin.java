@@ -18,7 +18,10 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.List;
 
-
+/**
+ * Diálogo para visualizar y gestionar el historial de conversaciones
+ * Incluye funcionalidades de búsqueda y filtrado
+ */
 public class ConversationHistoryDialog extends JDialog {
 
     private final ConversationHistory history;
@@ -38,6 +41,9 @@ public class ConversationHistoryDialog extends JDialog {
         loadConversations();
     }
 
+    /**
+     * Inicializa los componentes de la interfaz
+     */
     private void initComponents() {
         // Modelo de tabla personalizado
         tableModel = new ConversationTableModel();
@@ -76,6 +82,9 @@ public class ConversationHistoryDialog extends JDialog {
         searchField.addActionListener(e -> searchConversations(searchField.getText()));
     }
 
+    /**
+     * Organiza el layout de los componentes
+     */
     private void setupLayout() {
         setLayout(new BorderLayout(10, 10));
 
@@ -185,12 +194,18 @@ public class ConversationHistoryDialog extends JDialog {
         ));
     }
 
-    // Modelo de tabla personalizado
+    /**
+     * Modelo de tabla personalizado para mostrar conversaciones
+     */
     private class ConversationTableModel extends AbstractTableModel {
         private List<ConversationHistory.Conversation> conversations;
         private final DateTimeFormatter dateFormatter =
                 DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
 
+        /**
+         * Actualiza las conversaciones mostradas en la tabla
+         * @param conversations Nueva lista de conversaciones
+         */
         public void setConversations(List<ConversationHistory.Conversation> conversations) {
             this.conversations = conversations;
             fireTableDataChanged();

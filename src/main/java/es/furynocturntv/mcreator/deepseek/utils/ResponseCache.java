@@ -8,6 +8,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Implementa un sistema de caché para respuestas con tiempo de expiración.
+ * Utiliza un LinkedHashMap con política de eliminación LRU (Least Recently Used).
+ */
 public class ResponseCache {
     private final Map<String, CacheEntry> cacheMap;
     private final ScheduledExecutorService cleanupExecutor;
@@ -30,6 +34,9 @@ public class ResponseCache {
 
     /**
      * Almacena una respuesta en el caché con el TTL por defecto
+     * @param key Clave única para identificar la respuesta
+     * @param response La respuesta a almacenar
+     * @param cost Costo asociado a la generación de la respuesta
      */
     public void put(String key, String response, double cost) {
         put(key, response, cost, defaultTTL);
@@ -72,6 +79,7 @@ public class ResponseCache {
 
     /**
      * Programa la limpieza periódica del caché
+     * Ejecuta la tarea de limpieza cada TTL/2 milisegundos
      */
     private void scheduleCleanup() {
         cleanupExecutor.scheduleAtFixedRate(() -> {

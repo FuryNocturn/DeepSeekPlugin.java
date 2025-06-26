@@ -14,6 +14,10 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+/**
+ * Cliente para interactuar con el servidor local de LLaMA.cpp
+ * Gestiona el inicio/parada del servidor y las peticiones de generación.
+ */
 public class LlamaClient {
     private static final String LOCAL_HOST = "http://127.0.0.1:8080";
     private static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
@@ -33,6 +37,13 @@ public class LlamaClient {
                 .build();
     }
 
+    /**
+     * Inicia el servidor de LLaMA con el modelo especificado
+     * @param modelName Nombre del modelo a cargar
+     * @param timeoutMs Tiempo máximo de espera para el inicio del servidor
+     * @throws IOException Si hay problemas al iniciar el proceso
+     * @throws TimeoutException Si el servidor no responde en el tiempo especificado
+     */
     public void startServer(String modelName, int timeoutMs) throws IOException, TimeoutException {
         Path modelPath = modelsDir.resolve(modelName + ".gguf");
         if (!Files.exists(modelPath)) {
@@ -91,6 +102,12 @@ public class LlamaClient {
         }
     }
 
+    /**
+     * Genera una respuesta usando el modelo cargado
+     * @param params Parámetros de generación (temperatura, top_p, etc)
+     * @param timeoutMs Tiempo máximo de espera para la respuesta
+     * @return La respuesta generada por el modelo
+     */
     public ModelResponse generateResponse(LocalModel.GenerationParams params, int timeoutMs)
             throws IOException, TimeoutException {
         String json = objectMapper.writeValueAsString(params);

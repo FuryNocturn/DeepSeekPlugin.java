@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
+/**
+ * Genera y envía reportes de uso del plugin DeepSeek
+ */
 public class ReportGenerator {
     private final ConversationHistory history;
     private final String recipientEmail;
@@ -20,6 +23,10 @@ public class ReportGenerator {
         this.recipientEmail = recipientEmail;
     }
 
+    /**
+     * Envía reporte mensual por correo electrónico
+     * Incluye estadísticas de uso y últimas interacciones
+     */
     public void sendMonthlyReport() {
         try {
             // Generar contenido del reporte
@@ -58,6 +65,10 @@ public class ReportGenerator {
         }
     }
 
+    /**
+     * Genera el contenido del reporte en formato texto
+     * @return String con el contenido formateado del reporte
+     */
     private String generateReportContent() {
         LocalDate now = LocalDate.now();
         LocalDate monthStart = now.withDayOfMonth(1);
@@ -91,6 +102,11 @@ public class ReportGenerator {
         return report.toString();
     }
 
+    /**
+     * Formatea una conversación para el reporte
+     * @param conv Conversación a formatear
+     * @return String con el formato [fecha] prompt - costo
+     */
     private String formatConversation(ConversationHistory.Conversation conv) {
         return String.format("[%s] %s - Costo: $%.4f",
                 conv.timestamp.format(DateTimeFormatter.ISO_LOCAL_DATE),
